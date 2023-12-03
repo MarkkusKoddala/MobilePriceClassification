@@ -6,16 +6,16 @@ url = "https://www.mobiletrade.ee/en/c/phones#/page/1"
 page = requests.get(url)
 soup = BeautifulSoup(page.content, 'html.parser')
 
-phone_items = soup.find_all('div', class_='item-container')
+phone_items = soup.find_all('div', class_='catalog-taxons-product catalog-taxons-product--grid-view')
 
 phone_details_list = []
 
 for item in phone_items:
-    phone_link = item.find('div', class_='name').find('a')['href']
+    phone_link = item.find('div', class_='catalog-taxons-product catalog-taxons-product--grid-view').find('a')['href']
     phone_page = requests.get(phone_link)
     phone_soup = BeautifulSoup(phone_page.content, 'html.parser')
 
-    attribute_divs = phone_soup.find('div', id='tab-attribute').find_all('div')
+    attribute_divs = phone_soup.find('table', id='info-table').find_all('table')
     phone_details = {}
     for div in attribute_divs:
         attributes = div.find_all('tr')
